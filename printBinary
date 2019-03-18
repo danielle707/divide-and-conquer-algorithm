@@ -1,0 +1,41 @@
+//C++ codes for printBinary and printDecimal function, great material to digest!
+//use of stanford library
+
+#include "strlib.h"
+#include<iostream"
+using namespace std;
+
+void printBinary(int digits, string prefix = "");
+void printDecimal(int digits, string prefix = "");
+
+
+
+void printBinary(int digits, string prefix) {
+    if (digits == 0) {
+        cout << prefix << endl; // the base case already has cout, so I don't need to declare cout in the recursive one
+    } else {
+        printBinary(digits - 1, prefix + "0");
+        printBinary(digits - 1, prefix + "1");
+
+}
+}
+
+void printDecimal(int digits, string prefix) {
+    if (digits == 0) {
+        cout << prefix << endl; // the base case already has cout, so I don't need to declare cout in the recursive one
+    } else {
+        for (int i = 0; i <= 9; i++ ) {
+            printDecimal(digits - 1, prefix + integerToString(i));
+        }
+
+    }
+}
+
+int main() {
+    printBinary(3);
+    printDecimal(2);
+    return 0;
+}
+
+/*the thinking process could be thought as a 7-step decision tree(in the binary call case:2^0+ 2^1 + 2^2): 
+should I choose 0 or 1, of course, the desicion base in this function is 2, in printDecimal case, will be 10 */
