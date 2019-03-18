@@ -1,5 +1,4 @@
 //C++ codes for printBinary and printDecimal function, great material to digest!
-//use of stanford library
 
 #include "strlib.h"
 #include<iostream"
@@ -31,9 +30,24 @@ void printDecimal(int digits, string prefix) {
     }
 }
 
+
+void printDice(int digits, string prefix = "");
+
+void printDice(int digits, string prefix) {
+    if (digits == 0) {
+        cout << prefix << endl;
+    } else {
+        for (int i = 1; i <= 6; ++i) { //i start from "1" rather than "0"
+            printDice(digits-1, prefix + integerToString(i));
+        }
+
+}
+}
+
 int main() {
     printBinary(3);
     printDecimal(2);
+    printDice(2);
     return 0;
 }
 
