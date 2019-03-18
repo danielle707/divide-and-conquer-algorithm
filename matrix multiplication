@@ -1,0 +1,27 @@
+#因为现在还不太会markdown,就先用word格式记录
+#MaIn challenge：1）slicing the matrix; 2) concatenate the matrix( without list comprehension and indexing)
+
+#this matrix exercise also serves as a practice in matrix manipulation
+#matrix initialization: np.array((n1,n2)),且输入的时候是一行一行输入的，所以len(matrix) = dim[0]; 读取行的dim: len(matrix[1])
+#matrix convension: 行是1， 列是0
+#matrix dimension: [total: np.shape(matrix1); 
+#get element and matrix slicing
+
+import numpy as np
+import scipy as sp
+def matrixmul( x, y):
+    (n, n) = np.shape(x)
+    res = np.zeros((n,n))
+    if n == 1:
+        return x*y
+    else:
+        a, b, c, d = [i for Subx in np.split(x, 2, axis = 0) for i in np.split(Subx, 2, axis = 1)]
+        e, f, g, h = [j for Suby in np.split(y, 2, axis = 0) for j in np.split(Suby, 2, axis = 1)]
+        block1 = matrixmul(a, e) + matrixmul(b, g)
+        block2 = matrixmul(a, f) + matrixmul(b, h)
+        block3 = matrixmul(c, e) + matrixmul(e, d)
+        block4 = matrixmul(c, f) + matrixmul(d, h)
+        final1 = np.concatenate((block1,block2), axis = 1)
+        final2 = np.concatenate((block3,block4),axis = 1)
+        res = np.concatenate(final1, final2, axis = 0)
+    return res
