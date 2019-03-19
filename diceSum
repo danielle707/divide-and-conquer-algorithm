@@ -1,0 +1,62 @@
+int sumAll(const Vector<int>& v);
+void helperDiceSum(int dice, int desiredSum, int sumSoFar,Vector<int>& chosen);
+void diceSum(int dice, int desiredSum);
+
+void diceSum(int dice, int desiredSum) {
+    Vector<int> chosen;
+    int sumSoFar = 0;
+    helperDiceSum(dice,desiredSum,sumSoFar, chosen);
+}
+
+
+
+void helperDiceSum(int dice, int desiredSum, int sumSoFar,Vector<int>& chosen) {
+
+    if (sumAll(chosen) == desiredSum) {
+        // helper line
+        cout << chosen << endl;
+
+    } else {
+        // some dice left to roll;
+        //handle one dice;
+        // for each value taht die could have:
+        for (int i = 1; i <=6; i++) {
+            if(sumSoFar + i + 1*(dice - 1) >= desiredSum &&
+                sumSoFar + i + 6*(dice - 1) >= desiredSum) {
+                //....chose
+                chosen.add(i);
+                //....explore
+                helperDiceSum(dice - 1, desiredSum, sumSoFar+i, chosen);
+                //....un-choose
+                chosen.remove(chosen.size() - 1);
+            }
+
+
+        }
+    }
+}
+
+int sumAll(const Vector<int>& v) {
+    int sum = 0;
+    for (int k : v) {
+        sum += k;
+    }
+    return sum;
+}
+
+
+
+
+//one great thing about backtracking is that you could modify code by changing the base case;
+//you need to know what the previous one choose, magic of
+//真的，写方程的顺序特别重要，如果不想弄混的话，就再加一个header，先把prototype全部写在header里面
+//在declare variable时，不可以用&，这个是在function里面用的，declare时候，*是可以用的
+
+int main() {
+
+//    printBinary(3);
+//    printDecimal(2);
+//    diceRoll(3);
+    diceSum(3,7);
+    return 0;
+}
