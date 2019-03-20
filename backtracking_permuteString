@@ -1,0 +1,88 @@
+#include<iostream>
+#include<string>
+#include"string.h"
+#include<vector>
+#include"vector.h"
+#include"set.h"
+
+using namespace std;
+
+
+void permuteHelper(string s, string chosen,Set<string>& alreaddChosen);
+void permuteString(string s);
+void indent(int n);
+void subList(Vector<string>& v);
+void subListHelper(Vector<string>& v, Vector<string> chosen);
+
+
+void subList(Vector<string>& v) {
+    Vector<string> chosen;
+    subListHelper(v, chosen);
+}
+
+
+void subListHelper(Vector<string>& v, Vector<string> chosen) {
+    if (v.isEmpty()){
+        cout << chosen << endl;
+    } else {
+        string first = v[0];
+        v.remove(0);
+
+        chosen.add(first);
+        subListHelper(v,chosen);
+
+        chosen.remove(chosen.size() - 1);
+        subListHelper(v, chosen);
+
+        v.insert(0, first);
+
+  }
+
+}
+
+void indent(int n) {
+    for (int i = 0;i < n; i++) {
+        cout << " ";
+    }
+}
+
+
+void permuteHelper(string s, string chosen, Set<string>& alreadyChosen) {
+//    indent(chosen.length());
+
+    if (s.empty()) {
+        if (!alreadyChosen.contains(chosen)) {
+            cout << chosen << endl;
+            alreadyChosen.add(chosen);
+        }
+
+    } else {
+        //choose
+        for (size_t i = 0; i < s.length(); i++) {
+            char c = s[i];
+            chosen += c;
+            s.erase(i, 1);
+            //explore
+            permuteHelper(s, chosen, alreadyChosen);
+            //unchoose
+            s.insert(i,1,c);
+            chosen.erase(chosen.length() -1, 1);
+
+        }
+    }
+}
+
+
+void permuteString(string s) {
+    Set<string> chosen;
+    permuteHelper(s, "", chosen);
+
+}
+
+int main() {
+    Vector<string> v1 = {"marty","danny","ketty","jane"};
+    permuteString("GOOGLE");
+    subList(v1);
+    return 0;
+}
+
